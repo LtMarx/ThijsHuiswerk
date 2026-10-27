@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Frans – woordjes la famille</title>
+<meta name="description" content="Familie, feest en vrije tijd, het werkwoord avoir en de telwoorden 0-20 oefenen en toetsen">
+<link rel="stylesheet" href="../../_leermodule/v1/leermodule.css">
+</head>
+<body>
+<div id="app"><noscript>Zet JavaScript aan om deze app te gebruiken.</noscript></div>
+<script src="../../_leermodule/v1/leermodule.js"></script>
+<script>
+Leermodule.start({
+  id: 'frans-famille-woordjes',
+  titel: 'Frans oefenen',
+  ondertitel: 'La famille: woordjes, avoir en telwoorden 0-20 (Apprendre 1-4, 6, 8 en 10)',
+  taal: 'fr',
+  teksten: { top: 'Magnifique! Uitstekend gedaan.' },
+  onderdelen: [
+  {id:'a1', titel:'Apprendre 1', sub:'Vocabulaire thématique', woorden:[
+    ['het gezin, de familie','la famille'],['de broer','le frère'],['de zus','la sœur'],['de ouders','les parents (m pl)'],
+    ['het kind','l’enfant (m / f)',null,['l’enfant']],['de vader','le père'],['de moeder','la mère'],['papa','papa'],['mama','maman'],['de zoon','le fils'],
+    ['de dochter','la fille'],['de oom','l’oncle (m)'],['de tante','la tante'],['de opa','le grand-père'],['de oma','la grand-mère'],
+    ['de grootouders','les grands-parents (m pl)'],['de neef','le cousin'],['de nicht','la cousine'],
+    ['getrouwd (trouwen)','marié (se marier)'],['gescheiden (scheiden)','divorcé (divorcer)']
+  ]},
+  {id:'a2', titel:'Apprendre 2', sub:'Lire – vocabulaire', richting:'herkennen', woorden:[
+    ['beste','meilleur'],['morgen','demain'],['de verjaardag','l’anniversaire (m)'],['het feest','la fête'],
+    ['de uitnodiging','l’invitation (f)'],['uitnodigen','inviter'],['dansen','danser'],['eten','manger'],['de opa','le grand-père'],
+    ['de oma','la grand-mère'],['de ouders','les parents (m pl)'],['de vader','le père'],['de moeder','la mère'],
+    ['het gezin, de familie','la famille'],['de broer','le frère'],['de zus','la sœur'],['de tweeling','les jumeaux (m pl)'],['de hond','le chien']
+  ]},
+  {id:'a3', titel:'Apprendre 3', sub:'Grammaire I – avoir (hebben)',
+    uitleg: [
+      { kop: 'Het werkwoord avoir (hebben)', open: true, html: `
+        <table>
+          <tr><th>Frans</th><th>Nederlands</th></tr>
+          <tr><td>j’ai</td><td>ik heb</td></tr>
+          <tr><td>tu as</td><td>jij hebt</td></tr>
+          <tr><td>il a</td><td>hij heeft</td></tr>
+          <tr><td>elle a</td><td>zij heeft</td></tr>
+          <tr><td>on a</td><td>wij hebben, men heeft</td></tr>
+          <tr><td>nous avons</td><td>wij hebben</td></tr>
+          <tr><td>vous avez</td><td>jullie hebben, u heeft</td></tr>
+          <tr><td>ils ont</td><td>zij hebben (m)</td></tr>
+          <tr><td>elles ont</td><td>zij hebben (v)</td></tr>
+        </table>` },
+      { kop: 'Let op', open: true, html: `
+        <ol>
+          <li>Om te vragen en te zeggen hoe oud je bent, gebruik je in het Frans het werkwoord <span class="mark">avoir</span>:<br>
+            <span class="voorbeeld">Tu as quel âge ?</span> = Hoe oud ben je?<br>
+            <span class="voorbeeld">J’ai treize ans.</span> = Ik ben dertien jaar. (letterlijk: ik <em>heb</em> dertien jaar)</li>
+          <li><em>je</em> wordt <span class="mark">j’</span> voor een klinker: <span class="voorbeeld">j’ai</span> (= ik heb), <span class="voorbeeld">j’habite</span> (= ik woon).</li>
+          <li>Vanaf <em>il a</em> tot <em>elles ont</em> hoor je dat de woorden aan elkaar worden uitgesproken. Dit heet een <span class="mark">liaison</span>.</li>
+        </ol>` }
+    ],
+    vragen: [
+      { vraag: 'Welk werkwoord gebruik je in het Frans om te zeggen hoe oud je bent?', opties: ['avoir (hebben)', 'être (zijn)'], antwoord: 0, husselen: false, uitleg: 'In het Frans <em>heb</em> je een leeftijd: j’ai treize ans.' },
+      { vraag: 'Hoe vraag je in het Frans: <em>Hoe oud ben je?</em>', opties: ['Tu as quel âge ?', 'Tu es quel âge ?', 'Quel âge es-tu ?'], antwoord: 0, uitleg: 'Met avoir: tu <strong>as</strong> quel âge ?' },
+      { vraag: 'Vertaal: <em>Ik ben dertien jaar.</em>', antwoord: 'j’ai treize ans', taal: 'fr', uitleg: 'Met avoir: j’ai treize ans.' },
+      { vraag: 'Waarom schrijf je <em>j’ai</em> en niet <em>je ai</em>?', opties: ['Omdat je voor een klinker j’ wordt', 'Omdat ai een meervoud is', 'Dat is een uitzondering die je moet onthouden'], antwoord: 0, uitleg: 'Voor een klinker wordt je → j’: j’ai, j’habite.' },
+      { vraag: 'Wat is een <em>liaison</em>?', opties: ['Woorden die je aan elkaar uitspreekt, zoals in ils ont', 'Een woord dat je weglaat', 'Een Frans lidwoord'], antwoord: 0, uitleg: 'Bij ils‿ont en elles‿ont hoor je de woorden aan elkaar.' },
+      { vraag: 'Vul de goede vorm van avoir in: <em>nous ___</em>', antwoord: 'avons', taal: 'fr', uitleg: 'nous avons = wij hebben' },
+      { vraag: 'Vul de goede vorm van avoir in: <em>vous ___</em>', antwoord: 'avez', taal: 'fr', uitleg: 'vous avez = jullie hebben, u heeft' },
+      { vraag: 'Vul de goede vorm van avoir in: <em>ils ___</em>', antwoord: 'ont', taal: 'fr', uitleg: 'ils ont = zij hebben (m)' },
+      { vraag: 'Vul de goede vorm van avoir in: <em>tu ___</em>', antwoord: 'as', taal: 'fr', uitleg: 'tu as = jij hebt' },
+      { vraag: 'Vul de goede vorm van avoir in: <em>elle ___</em>', antwoord: 'a', taal: 'fr', uitleg: 'elle a = zij heeft' },
+      { vraag: 'Welke zin is goed?', opties: ['Elles ont deux chiens.', 'Elles a deux chiens.', 'Elles avons deux chiens.'], antwoord: 0, uitleg: 'elles → ont' }
+    ],
+    woorden:[
+    ['ik heb','j’ai'],['jij hebt','tu as'],['hij heeft','il a'],['zij heeft','elle a'],
+    ['wij hebben, men heeft','on a'],['wij hebben','nous avons',null,['nous avons','on a']],
+    ['jullie hebben, u heeft','vous avez'],['zij hebben (m)','ils ont'],['zij hebben (v)','elles ont']
+  ]},
+  {id:'a4', titel:'Apprendre 4', sub:'Écouter – vocabulaire', richting:'herkennen', woorden:[
+    ['gescheiden (scheiden)','divorcé (divorcer)'],['getrouwd (trouwen)','marié (se marier)'],['de halfbroer','le demi-frère'],
+    ['het enig kind','le fils / la fille unique',null,['le fils unique','la fille unique','le fils / la fille unique']],
+    ['alleen','seul(e)'],['het kind','l’enfant (m / f)',null,['l’enfant']],['de buurvrouw','la voisine'],['het weekend','le weekend'],
+    ['de buurman','le voisin'],['de oom','l’oncle (m)'],['de tante','la tante'],['de vriend','le copain'],['de vriendin','la copine'],
+    ['de trein','le train'],['wacht! (wachten op)','attends ! (attendre)'],['de boodschap','le message'],['luisteren (naar)','écouter'],['de slaapkamer','la chambre']
+  ]},
+  {id:'a6', titel:'Apprendre 6', sub:'Parler – vocabulaire', woorden:[
+    ['organiseren','organiser'],['welke','quel'],['oud','vieux'],['het dier','l’animal (m)'],['dol zijn op','adorer'],
+    ['de muziek','la musique'],['bij (thuis)','chez'],['schattig','mignon'],['de metro','le métro'],
+    ['alleen maar','seulement'],['naar huis gaan','rentrer'],['bovendien','en plus'],['lopend','à pied'],['de kat','le chat'],
+    ['de dag','la journée'],['het geluk','la chance'],['geweldig','génial'],['zoals','comme']
+  ]},
+  {id:'a8', titel:'Apprendre 8', sub:'Écrire – vocabulaire', woorden:[
+    ['de foto','la photo'],['klaargemaakt, voorbereid (klaarmaken, voorbereiden)','préparé (préparer)'],['goed, lekker','bon, bonne'],['de taart','le gâteau'],
+    ['de bloem','la fleur'],['zij lacht (lachen)','elle rit (rire)'],['de man, echtgenoot','le mari'],['grappig','drôle'],['de vakantie','les vacances (f pl)'],
+    ['augustus','août',null,['août','aout']],['mama','maman'],['de olijf','l’olive (f)'],['op','sur'],
+    ['de tafel','la table'],['iedereen','tout le monde'],['altijd','toujours'],['sinds','depuis']
+  ]},
+  {id:'a10', titel:'Apprendre 10', sub:'Grammaire lexicale – telwoorden 0-20',
+    uitleg: [
+      { kop: 'Telwoorden 0 tot en met 20', open: true, html: `
+        <table>
+          <tr><td>0</td><td>zéro</td><td>7</td><td>sept</td><td>14</td><td>quatorze</td></tr>
+          <tr><td>1</td><td>un</td><td>8</td><td>huit</td><td>15</td><td>quinze</td></tr>
+          <tr><td>2</td><td>deux</td><td>9</td><td>neuf</td><td>16</td><td>seize</td></tr>
+          <tr><td>3</td><td>trois</td><td>10</td><td>dix</td><td>17</td><td>dix-sept</td></tr>
+          <tr><td>4</td><td>quatre</td><td>11</td><td>onze</td><td>18</td><td>dix-huit</td></tr>
+          <tr><td>5</td><td>cinq</td><td>12</td><td>douze</td><td>19</td><td>dix-neuf</td></tr>
+          <tr><td>6</td><td>six</td><td>13</td><td>treize</td><td>20</td><td>vingt</td></tr>
+        </table>
+        <p class="tip">17, 18 en 19 zijn <em>tien-zeven</em>, <em>tien-acht</em> en <em>tien-negen</em>: <span class="voorbeeld">dix-sept, dix-huit, dix-neuf</span>. Vergeet het streepje niet.</p>` }
+    ],
+    vragen: [
+      { vraag: 'Schrijf 17 in het Frans.', antwoord: 'dix-sept', taal: 'fr', uitleg: 'dix-sept = tien + zeven, met een streepje.' },
+      { vraag: 'Schrijf 14 in het Frans.', antwoord: 'quatorze', taal: 'fr', uitleg: '14 = quatorze' },
+      { vraag: 'Welk getal is <em>seize</em>?', opties: ['16', '6', '17', '12'], antwoord: 0, uitleg: 'seize = 16 (six = 6)' },
+      { vraag: 'Welk getal is <em>douze</em>?', opties: ['12', '2', '11', '20'], antwoord: 0, uitleg: 'douze = 12 (deux = 2)' },
+      { vraag: 'Welke drie telwoorden tot 20 schrijf je met een streepje?', opties: ['17, 18 en 19', '11, 12 en 13', '16, 17 en 18'], antwoord: 0, uitleg: 'dix-sept, dix-huit, dix-neuf' },
+      { vraag: 'Hoe zeg je: <em>Ik ben twaalf jaar.</em>', antwoord: 'j’ai douze ans', taal: 'fr', uitleg: 'Leeftijd met avoir: j’ai douze ans.' }
+    ],
+    woorden:[
+    ['0','zéro',['0','nul']],
+    ['1','un',['1','een']],
+    ['2','deux',['2','twee']],
+    ['3','trois',['3','drie']],
+    ['4','quatre',['4','vier']],
+    ['5','cinq',['5','vijf']],
+    ['6','six',['6','zes']],
+    ['7','sept',['7','zeven']],
+    ['8','huit',['8','acht']],
+    ['9','neuf',['9','negen']],
+    ['10','dix',['10','tien']],
+    ['11','onze',['11','elf']],
+    ['12','douze',['12','twaalf']],
+    ['13','treize',['13','dertien']],
+    ['14','quatorze',['14','veertien']],
+    ['15','quinze',['15','vijftien']],
+    ['16','seize',['16','zestien']],
+    ['17','dix-sept',['17','zeventien']],
+    ['18','dix-huit',['18','achttien']],
+    ['19','dix-neuf',['19','negentien']],
+    ['20','vingt',['20','twintig']]
+  ]}
+  ]
+});
+</script>
+</body>
+</html>
