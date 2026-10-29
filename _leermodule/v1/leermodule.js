@@ -6,7 +6,7 @@
 (function () {
   'use strict';
 
-  var VERSIE = '1.2.0';
+  var VERSIE = '1.3.0';
 
   /* ---------- Talen voor woordjes ---------- */
   var TALEN = {
@@ -78,6 +78,25 @@
       if (/[^\s]\(/.test(p)) add(p.replace(/\(([^)]*)\)/g, '$1'));
     });
     return out;
+  }
+  // Hele zinnen (onderdeel met zinnen: true): geen komma-splitsing en geen lidwoordregels,
+  // leestekens tellen niet, en een klein tikfoutje is half goed.
+  function zinNorm(s) { return norm(s).replace(/[,;:"“”]/g, ' ').replace(/\s+/g, ' ').trim(); }
+  function afstand(a, b) {
+    var d = [], i, j;
+    for (i = 0; i <= a.length; i++) d[i] = [i];
+    for (j = 0; j <= b.length; j++) d[0][j] = j;
+    for (i = 1; i <= a.length; i++) for (j = 1; j <= b.length; j++)
+      d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+    return d[a.length][b.length];
+  }
+  function controleerZin(given, acc) {
+    var a = zinNorm(given);
+    if (!a) return { score: 0 };
+    if (acc.indexOf(a) >= 0) return { score: 1 };
+    if (acc.some(function (v) { return strip(v) === strip(a); })) return { score: 0.5, note: 'Bijna goed: let op de accenten.' };
+    if (acc.some(function (v) { return afstand(v, a) <= (v.length > 25 ? 2 : 1); })) return { score: 0.5, note: 'Bijna goed: kleine spelfout.' };
+    return { score: 0 };
   }
   function controleer(given, acc, taal) {
     var a = norm(given);
@@ -258,7 +277,7 @@
 
     /* ----- Inhoud verzamelen ----- */
     var gekozen = function () { return OND.filter(function (o) { return store.kies.indexOf(o.id) >= 0; }); };
-    var richtingLabel = function (r) { return r === 'herkennen' ? DOEL.kort + ' → ' + NL.kort : DOEL.kort + ' ⇄ ' + NL.kort; };
+    var richtingLabel = function (r) { return r === 'herkennen' ? DOEL.kort + ' → ' + NL.kort : r === 'produceren' ? NL.kort + ' → ' + DOEL.kort : DOEL.kort + ' ⇄ ' + NL.kort; };
     function flat(a) { return [].concat.apply([], a); }
 
     function woordItems(onderdelen) {
@@ -268,9 +287,10 @@
           var k = norm(w[0]) + '|' + norm(w[1]);
           var richting = o.richting || 'beide';
           if (map[k]) { if (richting === 'beide') map[k].richting = 'beide'; return; }
-          map[k] = { nl: w[0], doel: w[1], k: k, richting: richting, ond: o,
-            nlA: w[2] ? flat(w[2].map(function (x) { return variants(x, NL); })) : null,
-            doelA: w[3] ? flat(w[3].map(function (x) { return variants(x, DOEL); })) : null };
+          var zin = !!o.zinnen;
+          map[k] = { nl: w[0], doel: w[1], k: k, richting: richting, ond: o, zin: zin,
+            nlA: w[2] ? flat(w[2].map(function (x) { return zin ? [zinNorm(x)] : variants(x, NL); })) : null,
+            doelA: w[3] ? flat(w[3].map(function (x) { return zin ? [zinNorm(x)] : variants(x, DOEL); })) : null };
           lijst.push(map[k]);
         });
       });
@@ -279,8 +299,8 @@
     function woordVragen(onderdelen, richting) {
       var qs = [];
       woordItems(onderdelen).forEach(function (it) {
-        if (richting !== 'nl-doel') qs.push({ soort: 'woord', key: 'w:' + it.k + '>nl', item: it, van: 'doel', naar: 'nl', ond: it.ond });
-        if (it.richting === 'beide' && richting !== 'doel-nl') qs.push({ soort: 'woord', key: 'w:' + it.k + '>doel', item: it, van: 'nl', naar: 'doel', ond: it.ond });
+        if (richting !== 'nl-doel' && it.richting !== 'produceren') qs.push({ soort: 'woord', key: 'w:' + it.k + '>nl', item: it, van: 'doel', naar: 'nl', ond: it.ond });
+        if ((it.richting === 'beide' || it.richting === 'produceren') && richting !== 'doel-nl') qs.push({ soort: 'woord', key: 'w:' + it.k + '>doel', item: it, van: 'nl', naar: 'doel', ond: it.ond });
       });
       return qs;
     }
@@ -385,6 +405,7 @@
     function nakijken(q, given) {
       if (q.soort === 'woord') {
         var it = q.item;
+        if (it.zin) return controleerZin(given, q.naar === 'doel' ? (it.doelA || [zinNorm(it.doel)]) : (it.nlA || [zinNorm(it.nl)]));
         var acc = q.naar === 'doel' ? (it.doelA || variants(it.doel, DOEL)) : (it.nlA || variants(it.nl, NL));
         return controleer(given, acc, q.naar === 'doel' ? DOEL : NL);
       }
@@ -560,8 +581,8 @@
       var q = run.cur;
       var voor, achter;
       if (q.soort === 'woord') {
-        voor = '<div class="lm-wordrow"><span class="lm-word">' + vraagTekst(q) + '</span>' + (run.flipped && q.van === 'doel' ? sayBtn(q.item.doel) : '') + '</div>';
-        achter = '<div class="lm-answer lm-wordrow"><span class="lm-word">' + antwoordTekst(q) + '</span>' + (q.naar === 'doel' ? sayBtn(q.item.doel) : '') + '</div>';
+        voor = '<div class="lm-wordrow"><span class="lm-word' + (q.item.zin ? ' lm-zin' : '') + '">' + vraagTekst(q) + '</span>' + (run.flipped && q.van === 'doel' ? sayBtn(q.item.doel) : '') + '</div>';
+        achter = '<div class="lm-answer lm-wordrow"><span class="lm-word' + (q.item.zin ? ' lm-zin' : '') + '">' + antwoordTekst(q) + '</span>' + (q.naar === 'doel' ? sayBtn(q.item.doel) : '') + '</div>';
       } else {
         voor = '<div class="lm-begrip">' + q.voor + '</div>';
         achter = '<div class="lm-achter">' + q.achter + '</div>';
@@ -589,7 +610,7 @@
       var verder = toets ? (laatste ? 'Toets inleveren' : 'Volgende vraag') : 'Volgende';
       var html = voortgangBalk() + '<div class="lm-card">' + kaartKop(q) +
         (q.soort === 'woord'
-          ? '<div class="lm-wordrow"><span class="lm-word">' + vraagTekst(q) + '</span>' + (q.van === 'doel' ? sayBtn(q.item.doel) : '') + '</div>'
+          ? '<div class="lm-wordrow"><span class="lm-word' + (q.item.zin ? ' lm-zin' : '') + '">' + vraagTekst(q) + '</span>' + (q.van === 'doel' ? sayBtn(q.item.doel) : '') + '</div>'
           : '<div class="lm-vraag">' + vraagTekst(q) + '</div>') + '</div>';
 
       if (q.soort === 'mc') {
@@ -617,7 +638,7 @@
 
       // typ (woord of typvraag)
       var naarTaal = q.soort === 'woord' ? (q.naar === 'doel' ? DOEL : NL) : (q.v.taal ? (typeof q.v.taal === 'object' ? q.v.taal : TALEN[q.v.taal]) : null);
-      var ph = q.soort === 'woord' ? 'Typ het ' + naarTaal.naam + 'e woord' : 'Typ je antwoord';
+      var ph = q.soort === 'woord' ? 'Typ ' + (q.item.zin ? 'de ' + naarTaal.naam + 'e zin' : 'het ' + naarTaal.naam + 'e woord') : 'Typ je antwoord';
       var accenten = naarTaal && naarTaal.accenten && naarTaal.accenten.length && !run.answered
         ? '<div class="lm-accents" aria-label="Letters met accent">' + naarTaal.accenten.map(function (c) { return '<button data-act="acc" data-v="' + c + '" tabindex="-1">' + c + '</button>'; }).join('') + '</div>' : '';
       html += '<input id="ans" class="lm-ans" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="go"' +
@@ -993,5 +1014,5 @@
     if (cfg.taal && typeof cfg.taal === 'string' && !TALEN[cfg.taal]) throw new Error('onbekende taal "' + cfg.taal + '". Kies uit: ' + Object.keys(TALEN).join(', ') + '.');
   }
 
-  window.Leermodule = { versie: VERSIE, start: start, TALEN: TALEN, Profiel: Profiel, _test: { norm: norm, variants: variants, controleer: controleer } };
+  window.Leermodule = { versie: VERSIE, start: start, TALEN: TALEN, Profiel: Profiel, _test: { norm: norm, variants: variants, controleer: controleer, zinNorm: zinNorm, controleerZin: controleerZin } };
 })();

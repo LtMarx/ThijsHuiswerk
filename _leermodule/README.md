@@ -108,7 +108,8 @@ Leermodule.start({
   kaartjes: [ ['voorkant', 'achterkant'] ],
   vragen: [ ... ],
   woorden: [ ['nederlands', 'vreemd'] ],
-  richting: 'beide'                // alleen bij woorden: 'beide' (standaard) of 'herkennen' (alleen vreemd → NL)
+  richting: 'beide',               // alleen bij woorden: 'beide' (standaard), 'herkennen' (alleen vreemd → NL) of 'produceren' (alleen NL → vreemd)
+  zinnen: true                     // optioneel: de "woorden" zijn hele zinnen (zie onder)
 }
 ```
 
@@ -148,6 +149,13 @@ Nakijkregels voor woorden:
 - De luidsprekerknop spreekt het vreemde woord uit (Web Speech API). Dat werkt niet bij Latijn.
 - Dubbele woorden in verschillende onderdelen worden één keer gevraagd.
 - Het startscherm heeft de keuze *Zoals in het boek / vreemd → NL / NL → vreemd*.
+
+**Hele zinnen** (`zinnen: true` op het onderdeel, bijvoorbeeld de Stones bij Engels):
+- Een komma betekent hier géén "allebei goed", en lidwoordregels gelden niet.
+- Leestekens (`, . ? ! ; :`) en hoofdletters tellen niet mee.
+- Een klein tikfoutje (1 letter, bij lange zinnen 2) is half goed.
+- Zet alle goede varianten in de 4e plek, bijvoorbeeld met en zonder samentrekking: `['Hoe oud ben je?', "How old are you? I'm 13 years old.", null, ["How old are you? I'm 13 years old.", 'How old are you? I am 13 years old.']]`.
+- Meestal met `richting: 'produceren'`: de toets vraagt de zin van Nederlands naar de vreemde taal.
 
 Eigen taal (als die niet in de lijst staat):
 
